@@ -29,17 +29,15 @@ const SEED_INGREDIENTS = [
   { id: 'pollo',           name: 'Pollo — VERIFICAR PRECIO',  categoria: 'burrito', costoUnidad: 110, unidad: 'kg',     porcionesPorUnidad: 8,   requerimiento: '125 g',      core: true,  removible: false, stockPorciones: 0, alertaBaja: 20 },
 
   // ---------- LIMONADA CON AZÚCAR ----------
-  { id: 'apatzin',         name: 'Apatzin',                   categoria: 'bebida',  costoUnidad: 325, unidad: 'kg',     porcionesPorUnidad: 100, requerimiento: '10 g',       core: true,  removible: false, stockPorciones: 0, alertaBaja: 20 },
   { id: 'azucar',          name: 'Azúcar',                    categoria: 'bebida',  costoUnidad: 30,  unidad: 'kg',     porcionesPorUnidad: 20,  requerimiento: '50 g',       core: true,  removible: false, stockPorciones: 0, alertaBaja: 20 },
   // Agua y hielo son compartidos por TODAS las bebidas (no varían entre azúcar / monkfruit).
   { id: 'agua_purificada', name: 'Agua purificada',           categoria: 'bebida',  costoUnidad: 55,  unidad: 'garrafón',porcionesPorUnidad: 40, requerimiento: '500 ml',     core: true,  removible: false, stockPorciones: 0, alertaBaja: 15 },
   { id: 'hielo',           name: 'Hielo',                     categoria: 'bebida',  costoUnidad: 1,   unidad: 'porción directa', porcionesPorUnidad: 1, requerimiento: 'al gusto', core: true, removible: false, stockPorciones: 0, alertaBaja: 20 },
   { id: 'vaso_biocup',     name: 'Vaso BioCup 16oz',          categoria: 'bebida',  costoUnidad: 202, unidad: 'paquete',porcionesPorUnidad: 50,  requerimiento: '1 vaso',     core: true,  removible: false, stockPorciones: 0, alertaBaja: 20 },
-
+  { id: 'apatzin',         name: 'Apatzin',                   categoria: 'bebida',  costoUnidad: 325, unidad: 'kg',     porcionesPorUnidad: 100, requerimiento: '10 g',       core: true,  removible: false, stockPorciones: 0, alertaBaja: 20 },
   // ---------- LIMONADA CON MONKFRUIT ----------
-  { id: 'apatzin_mk',      name: 'Apatzin (línea Monkfruit)', categoria: 'bebida',  costoUnidad: 325, unidad: 'kg',     porcionesPorUnidad: 100, requerimiento: '10 g',       core: true,  removible: false, stockPorciones: 0, alertaBaja: 20 },
   { id: 'monkfruit',       name: 'Monkfruit (endulzante) — VERIFICAR PRECIO', categoria: 'bebida', costoUnidad: 30, unidad: 'kg', porcionesPorUnidad: 20, requerimiento: '50 g', core: true, removible: false, stockPorciones: 0, alertaBaja: 20 },
-  { id: 'vaso_biocup_mk',   name: 'Vaso BioCup 16oz (Monkfruit)', categoria: 'bebida', costoUnidad: 202, unidad: 'paquete', porcionesPorUnidad: 50, requerimiento: '1 vaso', core: true, removible: false, stockPorciones: 0, alertaBaja: 20 },
+  
 ];
 
 // Ids de ingredientes que ya no se usan (se fusionaron con otro). Si existen
@@ -118,11 +116,11 @@ const SEED_MENU = [
     tipo: 'bebida',
     precioFijo: 30,
     ingredientes: [
-      { ingredienteId: 'apatzin_mk', cantidad: 1 },
+      { ingredienteId: 'apatzin', cantidad: 1 },
       { ingredienteId: 'monkfruit', cantidad: 1 },
       { ingredienteId: 'agua_purificada', cantidad: 1 },
       { ingredienteId: 'hielo', cantidad: 1 },
-      { ingredienteId: 'vaso_biocup_mk', cantidad: 1 },
+      { ingredienteId: 'vaso_biocup', cantidad: 1 },
     ],
     extrasDisponibles: [],
   },

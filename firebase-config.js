@@ -14,12 +14,13 @@
 // Instrucciones completas y con capturas de referencia en INSTRUCCIONES.md
 
 const firebaseConfig = {
-  apiKey: "PEGA_AQUI_TU_API_KEY",
-  authDomain: "PEGA_AQUI_TU_PROYECTO.firebaseapp.com",
-  projectId: "PEGA_AQUI_TU_PROYECTO_ID",
-  storageBucket: "PEGA_AQUI_TU_PROYECTO.appspot.com",
-  messagingSenderId: "PEGA_AQUI_TU_SENDER_ID",
-  appId: "PEGA_AQUI_TU_APP_ID",
+  apiKey: "AIzaSyD2uUjX1QunIVyF1rO5ZUXuc-L7jE-tbuU",
+  authDomain: "burritos-moni-y-lilia.firebaseapp.com",
+  projectId: "burritos-moni-y-lilia",
+  storageBucket: "burritos-moni-y-lilia.firebasestorage.app",
+  messagingSenderId: "240389163242",
+  appId: "1:240389163242:web:5a938561311035646f6f93",
+  measurementId: "G-05LY342SBQ"
 };
 
 firebase.initializeApp(firebaseConfig);

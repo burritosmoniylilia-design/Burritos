@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Burritos Moni y Lilia</title>
+<meta name="theme-color" content="#241A17">
+<meta name="description" content="App de inventario, pedidos y finanzas — Burritos Moni y Lilia">
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Moni y Lilia">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="mark">🌯</div>
+      <div>
+        <h1>Burritos Moni y Lilia</h1>
+        <div class="sub"><span id="conn-dot"></span><span id="conn-label">conectando…</span></div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button data-tab="inventario" class="active"><span class="ic">📦</span>Inventario</button>
+    <button data-tab="pedidos"><span class="ic">🧾</span>Pedidos<span class="badge" id="badge-pedidos" style="display:none">0</span></button>
+    <button data-tab="armar"><span class="ic">🌮</span>Armar pedido</button>
+    <button data-tab="finanzas"><span class="ic">💵</span>Finanzas</button>
+    <button data-tab="analiticas"><span class="ic">📊</span>Analíticas</button>
+    <button data-tab="factura"><span class="ic">🧻</span>Factura/Ticket</button>
+  </nav>
+
+  <main>
+
+    <!-- ===================== INVENTARIO ===================== -->
+    <section class="tab active" id="tab-inventario">
+      <h2 class="tab-title">Inventario</h2>
+      <p class="tab-desc">Existencias por porción. Se descuenta solo cuando se arma un pedido. Toca "Reabastecer" cuando llegue mercancía.</p>
+
+      <div class="inv-toolbar">
+        <input type="text" id="inv-search" placeholder="Buscar ingrediente…">
+        <button class="btn btn-ghost btn-sm" data-filter="todos">Todos</button>
+        <button class="btn btn-ghost btn-sm" data-filter="burrito">🌯 Burrito</button>
+        <button class="btn btn-ghost btn-sm" data-filter="bebida">🥤 Bebida</button>
+        <button class="btn btn-primary btn-sm" id="btn-nuevo-ingrediente">+ Ingrediente</button>
+      </div>
+
+      <div class="inv-grid" id="inv-grid"></div>
+    </section>
+
+    <!-- ===================== PEDIDOS ===================== -->
+    <section class="tab" id="tab-pedidos">
+      <h2 class="tab-title">Pedidos en cola</h2>
+      <p class="tab-desc">Lo que se debe preparar y entregar ahorita.</p>
+
+      <div class="queue-cols">
+        <div class="queue-col">
+          <h3>🟡 Pendientes</h3>
+          <div id="col-pendiente"></div>
+        </div>
+        <div class="queue-col">
+          <h3>🔥 En preparación</h3>
+          <div id="col-preparando"></div>
+        </div>
+        <div class="queue-col">
+          <h3>✅ Listos</h3>
+          <div id="col-listo"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ARMAR PEDIDO ===================== -->
+    <section class="tab" id="tab-armar">
+      <h2 class="tab-title">Armar pedido</h2>
+      <p class="tab-desc">Personaliza cada burrito o bebida y agrégalo al pedido actual.</p>
+
+      <div class="builder-grid">
+        <div id="menu-list"></div>
+
+        <div class="card cart-card">
+          <h3 style="font-family:'Bungee',cursive;font-size:15px;color:var(--tinta);margin:0 0 4px;">Pedido actual</h3>
+          <div id="combo-banner"></div>
+          <div id="cart-lines"><div class="cart-empty">Aún no agregas nada.</div></div>
+          <div class="cart-total">
+            <span>Total</span>
+            <span class="amt mono" id="cart-total-amt">$0.00</span>
+          </div>
+          <button class="btn btn-primary btn-block" id="btn-enviar-pedido" style="margin-top:14px;" disabled>Enviar a cocina</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FINANZAS ===================== -->
+    <section class="tab" id="tab-finanzas">
+      <h2 class="tab-title">Finanzas</h2>
+      <p class="tab-desc">Ventas registradas (se cuentan desde que se envía el pedido a cocina).</p>
+
+      <div class="filter-row">
+        <button data-range="hoy" class="active">Hoy</button>
+        <button data-range="7">Últimos 7 días</button>
+        <button data-range="30">Últimos 30 días</button>
+        <button data-range="todo">Todo</button>
+      </div>
+
+      <div class="card renta-card">
+        <label for="renta-mensual">Renta mensual del local ($)</label>
+        <div class="renta-row">
+          <input type="number" step="0.01" id="renta-mensual" placeholder="20000">
+          <button class="btn btn-primary btn-sm" id="btn-guardar-renta">Guardar</button>
+        </div>
+        <p class="tab-desc" style="margin:8px 0 0;">Se prorratea automáticamente según el rango que elijas arriba (día, semana, mes o meses con ventas).</p>
+      </div>
+
+      <div class="kpi-grid" id="kpi-grid"></div>
+
+      <div class="card" style="overflow-x:auto;">
+        <table class="fin-table">
+          <thead>
+            <tr><th>Fecha</th><th>Ticket</th><th>Tipo</th><th class="num">Costo</th><th class="num">Precio</th><th class="num">Ganancia</th></tr>
+          </thead>
+          <tbody id="fin-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================== ANALÍTICAS ===================== -->
+    <section class="tab" id="tab-analiticas">
+      <h2 class="tab-title">Analíticas</h2>
+      <p class="tab-desc">Qué se vende más, mes con mes (con base en los pedidos enviados a cocina, sin contar cancelados).</p>
+      <div id="analiticas-content"></div>
+    </section>
+
+    <!-- ===================== FACTURA / TICKET ===================== -->
+    <section class="tab" id="tab-factura">
+      <h2 class="tab-title">Factura / Ticket</h2>
+      <p class="tab-desc">Elige un pedido y genera su ticket de venta o una factura con los datos del cliente, listos para imprimir.</p>
+
+      <div class="card" style="margin-bottom:14px;">
+        <div class="field">
+          <label>Pedido</label>
+          <select id="factura-pedido"></select>
+        </div>
+        <div class="filter-row factura-modo" style="margin-top:10px;margin-bottom:0;">
+          <button data-modo="ticket" class="active">Ticket simple</button>
+          <button data-modo="factura">Factura (con datos del cliente)</button>
+        </div>
+        <div id="factura-cliente" style="display:none; margin-top:12px;">
+          <div class="field-row">
+            <div class="field">
+              <label>Nombre / Razón social</label>
+              <input type="text" id="factura-cliente-nombre" placeholder="Nombre del cliente">
+            </div>
+            <div class="field">
+              <label>RFC</label>
+              <input type="text" id="factura-cliente-rfc" placeholder="RFC">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Uso CFDI</label>
+              <input type="text" id="factura-cliente-uso" placeholder="Ej. G03 Gastos en general">
+            </div>
+            <div class="field">
+              <label>Método de pago</label>
+              <input type="text" id="factura-cliente-metodo" placeholder="Ej. Efectivo, tarjeta…">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="ticket-preview"></div>
+      <button class="btn btn-primary btn-block no-print" id="btn-imprimir-ticket" style="margin-top:14px;">🖨️ Imprimir</button>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===================== MODAL INGREDIENTE ===================== -->
+<div class="overlay" id="overlay-ing">
+  <div class="modal">
+    <button class="modal-close" id="close-ing">✕</button>
+    <h3 id="ing-modal-title">Ingrediente</h3>
+    <input type="hidden" id="ing-id">
+    <div class="field">
+      <label>Nombre</label>
+      <input type="text" id="ing-nombre" placeholder="Ej. Aguacate">
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Categoría</label>
+        <select id="ing-categoria">
+          <option value="burrito">Burrito</option>
+          <option value="bebida">Bebida</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Unidad de compra</label>
+        <input type="text" id="ing-unidad" placeholder="kg, garrafón, paquete…">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Costo por unidad ($)</label>
+        <input type="number" step="0.01" id="ing-costo">
+      </div>
+      <div class="field">
+        <label>Porciones por unidad</label>
+        <input type="number" step="1" id="ing-porciones">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Requerimiento por porción</label>
+        <input type="text" id="ing-requerimiento" placeholder="Ej. 40 g">
+      </div>
+      <div class="field">
+        <label>Alerta de stock bajo (porciones)</label>
+        <input type="number" step="1" id="ing-alerta">
+      </div>
+    </div>
+    <div class="field" id="ing-stock-field" style="display:none;">
+      <label>Existencia actual (en <span id="ing-stock-unidad-lbl">unidad</span>) — corrige aquí si capturaste mal la cantidad</label>
+      <input type="number" step="0.01" id="ing-stock-actual" placeholder="Ej. 6">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary btn-block" id="btn-guardar-ing">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL REABASTECER ===================== -->
+<div class="overlay" id="overlay-restock">
+  <div class="modal">
+    <button class="modal-close" id="close-restock">✕</button>
+    <h3>Reabastecer <span id="restock-nombre"></span></h3>
+    <input type="hidden" id="restock-id">
+    <div class="field">
+      <label>Unidades compradas (<span id="restock-unidad-lbl"></span>)</label>
+      <input type="number" step="0.01" id="restock-unidades" placeholder="Ej. 2">
+    </div>
+    <p class="tab-desc" id="restock-preview" style="margin:0 0 8px;"></p>
+    <div class="modal-actions">
+      <button class="btn btn-primary btn-block" id="btn-confirmar-restock">Agregar al inventario</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js').catch(console.error);
+    });
+  }
+</script>
+</body>
+</html>

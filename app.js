@@ -464,7 +464,7 @@ function calcularCarrito(){
   for (let i = 0; i < nPares; i++){
     const b = burritos[i], d = bebidas[i];
     const costoJunto = b.costo + d.costo;
-    const precioJunto = round2(costoJunto * (1 + REGLAS_PRECIO.margenCombo));
+    const precioJunto = round2(b.precioIndividual + d.precioIndividual - 15);
     lineas.push({ esCombo: true, items: [b, d], costo: round2(costoJunto), precio: precioJunto });
   }
   for (let i = nPares; i < burritos.length; i++){

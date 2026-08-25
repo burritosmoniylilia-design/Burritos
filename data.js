@@ -102,6 +102,7 @@ const SEED_MENU = [
     id: 'limonada_azucar',
     nombre: 'Limonada con Azúcar',
     tipo: 'bebida',
+    precioFijo:30,
     ingredientes: [
       { ingredienteId: 'apatzin', cantidad: 1 },
       { ingredienteId: 'azucar', cantidad: 1 },
@@ -115,6 +116,7 @@ const SEED_MENU = [
     id: 'limonada_monkfruit',
     nombre: 'Limonada con Monkfruit',
     tipo: 'bebida',
+    precioFijo: 30,
     ingredientes: [
       { ingredienteId: 'apatzin_mk', cantidad: 1 },
       { ingredienteId: 'monkfruit', cantidad: 1 },
